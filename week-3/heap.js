@@ -50,7 +50,6 @@ class MaxHeap {
 
   bubbleDown() {
     let i = 0;
-
     while (true) {
       let left = 2 * i + 1;
       let right = 2 * i + 2;
