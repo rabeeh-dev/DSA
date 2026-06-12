@@ -79,7 +79,6 @@ class heap{
     }
 }
 
-
 const hp = new heap();
 
 console.log("--- 1. INSERTING ELEMENTS ---");

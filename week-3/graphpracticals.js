@@ -1,41 +1,89 @@
-class graph {
-    constructor() {
-        this.list = {};
+class Graph {
+  constructor() {
+    this.list = {};
+  }
+
+  addVertex(vertex) {
+    if (!this.list[vertex]) {
+      this.list[vertex] = [];
     }
-    
-    addvertex(vertex) {
-        if (!this.list[vertex]) {
-            this.list[vertex] = [];
+  }
+
+  addEdge(v1, v2) {
+    this.addVertex(v1);
+    this.addVertex(v2);
+
+    this.list[v1].push(v2);
+    this.list[v2].push(v1);
+  }
+
+  display() {
+    for (let vertex in this.list) {
+      console.log(vertex + " -> " + this.list[vertex].join(", "));
+    }
+  }
+
+  bfs(start) {
+    let queue = [start];
+    let visited = new Set();
+
+    visited.add(start);
+
+    while (queue.length) {
+      let vertex = queue.shift();
+
+      console.log(vertex);
+
+      for (let neighbor of this.list[vertex]) {
+        if (!visited.has(neighbor)) {
+          visited.add(neighbor);
+          queue.push(neighbor);
         }
+      }
     }
-    
-    addedges(v1, v2) {
-        this.addvertex(v1);
-        this.addvertex(v2);
-        
-        this.list[v1].push(v2);
-        this.list[v2].push(v1); 
+  }
+
+  dfs(start, visited = new Set()) {
+    visited.add(start);
+
+    console.log(start);
+
+    for (let neighbor of this.list[start]) {
+      if (!visited.has(neighbor)) {
+        this.dfs(neighbor, visited);
+      }
+    }
+  }
+
+  removeEdge(v1, v2) {
+    this.list[v1] = this.list[v1].filter((vertex) => vertex !== v2);
+
+    this.list[v2] = this.list[v2].filter((vertex) => vertex !== v1);
+  }
+
+  removeVertex(vertex) {
+    while (this.list[vertex].length) {
+      let adjacent = this.list[vertex].pop();
+
+      this.removeEdge(vertex, adjacent);
     }
 
-    display() {
-        for (let x in this.list) { 
-            console.log(x, "->", this.list[x].join(", "));
-        }
-    }
+    delete this.list[vertex];
+  }
 }
 
-const g = new graph();
+const g = new Graph();
 
-// 1. Add Vertices
-g.addvertex("Alice");
-g.addvertex("Bob");
-g.addvertex("Charlie");
+g.addVertex("A");
+g.addVertex("B");
+g.addVertex("C");
+g.addVertex("D");
 
-// 2. Add Edges (Connections)
-g.addedges("Alice", "Bob");
-g.addedges("Bob", "Charlie");
-g.addedges("Charlie", "Alice");
-
-// 3. Display the Adjacency List
-console.log("--- Graph Structure ---");
+g.addEdge("A", "B");
+g.addEdge("A", "C");
+g.addEdge("B", "D");
 g.display();
+g.bfs("A");
+g.dfs("A");
+g.removeEdge("A", "B");
+g.removeVertex("C");

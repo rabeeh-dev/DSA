@@ -234,7 +234,7 @@ class tree {
         return curr+left+right
     }
 
-    removeCase1(node = this.root,target){  //remove leaf node
+    removeCase1(node = this.root,target){
         if(node === null) return null
 
         if(target < node.data){

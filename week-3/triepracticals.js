@@ -70,6 +70,7 @@ class trie{
     }
 }
 
+
 // --- TEST RUNNER ---
 
 const myTrie = new trie();
