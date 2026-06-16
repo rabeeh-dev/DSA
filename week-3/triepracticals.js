@@ -18,7 +18,7 @@ class trie{
             }
             curr = curr.child[x]
         }
-        curr.isEnd = true 
+        curr.isEnd = true
     }
     
     search(word){
@@ -40,93 +40,66 @@ class trie{
             }
             curr = curr.child[x]
         }
-        return true 
+        return true
     }
     
-    collectWord(node,currWord,result){
+    collectwords(node,currWord,result){
         if(node.isEnd){
             result.push(currWord)
         }
         
         for(let x in node.child){
-            this.collectWord(node.child[x],currWord+x,result)
+            this.collectwords(node.child[x],currWord+x,result)
         }
     }
     
-    autoComplete(prefix){
+    autocomplete(prefix){
         let curr = this.root
         for(let x of prefix){
             if(!curr.child[x]){
                 return []
             }
-            
             curr = curr.child[x]
         }
         
         let result = []
-        
-        this.collectWord(curr,prefix,result)
+        this.collectwords(curr,prefix,result)
         return result
     }
+    
+    display() {
+        let result = [];
+        this.collectwords(this.root, "", result);
+        console.log("Stored Words:", result);
+    }
+    
+    
 }
 
 
-// --- TEST RUNNER ---
-
 const myTrie = new trie();
-
-console.log("--- 1. Testing Insertion and Search ---");
 myTrie.insert("apple");
 myTrie.insert("app");
-myTrie.insert("apricot");
-myTrie.insert("banana");
 
-console.log(myTrie.search("apple"));   // Expected: true
-console.log(myTrie.search("app"));     // Expected: true (checks if short words work alongside longer prefixes)
-console.log(myTrie.search("apr"));     // Expected: false (prefix exists, but not the full word)
-console.log(myTrie.search("orange"));  // Expected: false (completely missing word)
+console.log("--- Exact Word Search Tests ---");
+console.log("Search 'apple' (Expected: true) ->", myTrie.search("apple"));
+console.log("Search 'app'   (Expected: true) ->", myTrie.search("app"));
+console.log("Search 'ap'    (Expected: false) ->", myTrie.search("ap"));
 
+console.log("\n--- Prefix Search Tests ---");
+console.log("StartsWith 'ap'   (Expected: true) ->", myTrie.startWith("ap"));
+console.log("StartsWith 'appl' (Expected: true) ->", myTrie.startWith("appl"));
+console.log("StartsWith 'b'    (Expected: false) ->", myTrie.startWith("b"));
 
-console.log("\n--- 2. Testing startWith (Prefix Matching) ---");
-console.log(myTrie.startWith("app"));  // Expected: true (matches 'apple' and 'app')
-console.log(myTrie.startWith("apr"));  // Expected: true (matches 'apricot')
-console.log(myTrie.startWith("ban"));  // Expected: true (matches 'banana')
-console.log(myTrie.startWith("cat"));  // Expected: false
+// Add these to your existing test calls at the bottom of the script
+console.log("\n--- Autocomplete Suggestions Tests ---");
 
+// Test Case 1: Multiple matches
+console.log("Autocomplete 'ap' (Expected: ['apple', 'app']) ->", myTrie.autocomplete("ap"));
 
-console.log("\n--- 3. Testing autoComplete ---");
-// Should return both 'apple' and 'app'
-console.log("Autocomplete 'app':", myTrie.autoComplete("app")); 
-// Expected: [ 'app', 'apple' ] (order depends on object key insertion order)
+// Test Case 2: Exact match that branches further
+console.log("Autocomplete 'app' (Expected: ['apple', 'app']) ->", myTrie.autocomplete("app"));
 
-// Should return all words starting with 'ap'
-console.log("Autocomplete 'ap':", myTrie.autoComplete("ap"));  
-// Expected: [ 'app', 'apple', 'apricot' ]
-
-// Should return ['banana']
-console.log("Autocomplete 'ban':", myTrie.autoComplete("ban")); 
-// Expected: [ 'banana' ]
-
-// Should return [] since no words start with 'z'
-console.log("Autocomplete 'z':", myTrie.autoComplete("z"));   
-// Expected: []
-
-
-console.log("\n--- 4. Edge Cases ---");
-myTrie.insert(""); // Inserting an empty string
-console.log("Search empty string:", myTrie.search("")); // Expected: true
-console.log("Autocomplete empty string:", myTrie.autoComplete("")); 
-// Expected: [ '', 'app', 'apple', 'apricot', 'banana' ] (returns everything in the trie)
-
-
-
-
-
-
-
-
-
-
-
-
-
+// Test Case 3: Missing path scenario
+console.log("Autocomplete 'ban' (Expected: []) ->", myTrie.autocomplete("ban"));
+myTrie.display()

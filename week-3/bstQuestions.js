@@ -273,6 +273,95 @@ class tree {
         traverse(this.root);
         return result;
     }
+
+    levelorder(){
+        if(!this.root){
+            return 
+        }
+        let queue = [this.root]
+        while(queue.length){
+            let curr = queue.shift()
+            console.log(curr.data)
+
+            if(curr.left){
+                queue.push(curr.left)
+            }
+
+            if(curr.right){
+                queue.push(curr.right)
+            }
+        }
+    }
+
+    findparent(target){
+        if(!this.root || target === this.root.data){
+            return null
+        }
+        let curr = this.root
+        let parent = null
+        
+        while(curr){
+            if(curr.left && curr.left.data === target || curr.right && curr.right.data === target){
+                    return curr
+            }
+            
+            if(target < curr.data){
+                curr = curr.left
+            }else{
+                curr = curr.right
+            }
+        }
+        
+        return null
+    }
+
+    finddepth(target){
+        let curr = this.root
+        let depth = 0
+        while(curr){
+            if(curr.data === target){
+                return depth
+            }
+            
+            if(target < curr.data){
+                depth++
+                curr = curr.left
+            }else{
+                depth++
+                curr = curr.right
+            }
+        }
+        
+        return -1
+    }
+
+    findinternalnode(node = this.root){
+        if(node === null){
+            return 0
+        }
+        
+        if(node.left === null && node.right === null){
+            return 0
+        }
+        
+        return 1+ this.findinternalnode(node.left)+this.findinternalnode(node.right)
+    }
+
+    sum(node = this.root){
+        if(node === null){
+            return 0
+        }
+        
+        let left = this.sum(node.left)
+        let right = this.sum(node.right)
+        let curr = node.data
+        
+        return left+right+curr
+    }
+
+    
+
+
 }
 
 // ==========================================
