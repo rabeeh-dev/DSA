@@ -1,3 +1,30 @@
+//BST AND TREE PRACTICALS 
+
+// insert(data)
+// inorder(node)
+// preorder(node)
+// postorder(node)
+// levelOrder()
+// contains(target)
+// findClosest(target)
+// height(node)
+// countNodes(node)
+// countLeafNodes(node)
+// countInternalNodes(node)
+// sumNodes(node)
+// findMax(node)
+// findMin(node)
+// findDepth(target)
+// findParent(target)
+// cloneTree(node)
+// mirrorTree(node)
+// remove(target,node)
+// isValidBST(node,min,max)
+// kthLargest(k)
+// kthSmallest(k)
+// findInorderSuccessor(node)
+
+
 class Node {
     constructor(data) {
         this.data = data;
@@ -298,7 +325,6 @@ class tree {
             return null
         }
         let curr = this.root
-        let parent = null
         
         while(curr){
             if(curr.left && curr.left.data === target || curr.right && curr.right.data === target){

@@ -1,10 +1,22 @@
+//TRIE Practials 
+
+// insert(word)
+
+// search(word)
+
+// startsWith(prefix)
+
+// autoComplete(prefix)
+
+// display()
+
+
 class trieNode{
     constructor(){
         this.child = {}
         this.isEnd = false
     }
-}
-
+} 
 class trie{
     constructor(){
         this.root = new trieNode()

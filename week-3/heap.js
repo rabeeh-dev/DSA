@@ -1,3 +1,17 @@
+//Heap Practicals 
+
+// insert(data)
+// bubbleUp()
+
+// remove()
+// bubbleDown()
+
+// heapSort()
+
+// insertTask(task,priority)
+// removeTask()
+
+
 class heap{
     constructor(){
         this.heap = []

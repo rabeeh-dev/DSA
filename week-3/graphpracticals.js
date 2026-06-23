@@ -1,3 +1,21 @@
+//Graph practicals 
+
+// addVertex(vertex)
+
+// addEdge(v1,v2)
+
+// display()
+
+// bfs(start)
+
+// dfs(start)
+
+// removeEdge(v1,v2)
+
+// removeVertex(vertex)
+
+
+
 class Graph {
   constructor() {
     this.list = {};
